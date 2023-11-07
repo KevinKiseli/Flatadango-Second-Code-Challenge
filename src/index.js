@@ -5,11 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const BASE_URL = "http://localhost:3000";
     let numberOfTickets = 0; 
     
-    // Shows number of tickets.
+    // Shows number of tickets available before purchase.
   
-    // Function to fetch movie details and update the UI
+    // Function to fetch movie details and update the wepbage.
     const fetchAndDisplayMovieDetails = async (filmsId) => {
       try {
+        // fetch(`${BASE_URL}/films/${filmsId}`
         const response = await fetch(`${BASE_URL}/films/${filmsId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch movie details.");
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
        
         numberOfTickets = capacity - tickets_sold; 
         // Remaining tickets
+        
   
         // Update the DOM with movie details
         document.getElementById("title").textContent = title;
@@ -55,14 +57,15 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         buyButton.disabled = false;
       }
-      // Disable the "Buy Ticket" button if no tickets are available
+      // Leaves the ticket number at 0 unless page is reloaded or switching titles.
     };
   
-    // Function for ticket purchase
+    // Function for purchase of ticket
     const buyTicket = async () => {
       try {
         if (numberOfTickets > 0) {
           // Simulate a ticket purchase (no persistence)
+          
           numberOfTickets -= 1;
   
           // Update available tickets on the frontend
@@ -71,20 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
           // Simulate updating the server (in reality, you would make an API call)
           const newTicketsSold = capacity - numberOfTickets;
   
-          // Simulate a successful purchase
+          // A purchase
           setTimeout(() => {
-            // Simulate updating the server (in reality, you would make an API call)
+            // Updates the server
             filmInfo.tickets_sold = newTicketsSold;
   
-            // Update the server data (not persisted in this example)
-            // You would typically make an API call to update the server data here
-            // Example: fetch(`${BASE_URL}/films/${filmsId}`, {
-            //   method: 'PUT', // or 'POST' depending on your API design
-            //   body: JSON.stringify({ tickets_sold: newTicketsSold }),
-            //   headers: {
-            //     'Content-Type': 'application/json',
-            //   },
-            // });
           }, 1000);
         }
       } catch (error) {
@@ -121,10 +115,10 @@ document.addEventListener("DOMContentLoaded", () => {
       placeholderLi.remove();
     }
   
-    // Call populateMovieList to fetch and display the list of movies
+    // Populates Movie list by fetching and displaying the list of movies
     populateMovieList();
   
-    // Add a click event listener to the "Buy Ticket" button
+    // Click event listener to the "Buy Ticket" button
     const buyButton = document.getElementById("buy-ticket");
     buyButton.addEventListener("click", () => {
       buyTicket();
